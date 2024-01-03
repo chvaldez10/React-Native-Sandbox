@@ -113,6 +113,8 @@ android/build/
 
 # Firebase cache
 .firebase/
+firebaseConfig.ts
+
 
 # VS Code profiles
 .vscode-profiles/
