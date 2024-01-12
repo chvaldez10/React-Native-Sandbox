@@ -7,6 +7,7 @@ const Page = () => {
     <View>
       <Link href={"/(modals)/login"}>login</Link>
       <Link href={"/(modals)/booking"}>booking</Link>
+      <Link href={"/listing/1337"}>listing details</Link>
     </View>
   );
 };
