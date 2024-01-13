@@ -62,12 +62,18 @@ function RootLayoutNav() {
           title: "Login / Sign up",
           headerTitleStyle: { fontFamily: "mon-sb" },
           presentation: "modal",
+          animation: "fade",
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()}>
               <Ionicons name="close-outline" size={22} />
             </TouchableOpacity>
           ),
         }}
+      />
+      <Stack.Screen name="listing/[id]" options={{ headerTitle: "" }} />
+      <Stack.Screen
+        name="(modals)/booking"
+        options={{ presentation: "transparentModal" }}
       />
     </Stack>
   );
