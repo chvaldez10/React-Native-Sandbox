@@ -13,7 +13,9 @@ import { useColorScheme } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as SecureStore from "expo-secure-store";
 
-const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+// const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const CLERK_PUBLISHABLE_KEY =
+  "pk_test_ZHJpdmVuLW9wb3NzdW0tOTguY2xlcmsuYWNjb3VudHMuZGV2JA";
 
 const tokenCache = {
   async getToken(key: string) {
