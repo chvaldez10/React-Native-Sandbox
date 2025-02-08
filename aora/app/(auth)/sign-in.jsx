@@ -2,31 +2,44 @@ import React from "react";
 import { useState } from "react";
 import { View, Text, ScrollView, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 import { images } from "@/constants";
 import { CustomButtons, FormField } from "@/components";
+import { signIn, signOut } from "@/lib/appwrite";
 
-const signIn = () => {
+const signInPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const submit = () => {
-    if (form.email === "" || form.password === "") {
+  const submit = async () => {
+    if (!form.email || !form.password) {
       Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
     setIsSubmitting(true);
+
+    try {
+      await signIn(form.email, form.password);
+      router.push("/home");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <SafeAreaView className="h-full bg-black">
-      <ScrollView>
-        <View className="w-full min-h-[85vh] px-4 py-6">
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
+        <View className="w-full px-4">
           <Image
             source={images.logo}
             resizeMode="contain"
@@ -43,13 +56,6 @@ const signIn = () => {
             keyboardType="email-address"
           />
           <FormField
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
-            keyboardType="email-address"
-          />
-          <FormField
             title="Password"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
@@ -61,6 +67,12 @@ const signIn = () => {
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
+          {/* <CustomButtons
+            title="Sign Out"
+            handlePress={signOut}
+            containerStyles="mt-7"
+            isLoading={isSubmitting}
+          /> */}
           <View className="flex justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-gray-100 font-pregular">
               Don't have an account?
@@ -78,4 +90,4 @@ const signIn = () => {
   );
 };
 
-export default signIn;
+export default signInPage;

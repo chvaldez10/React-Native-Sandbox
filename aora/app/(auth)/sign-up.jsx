@@ -2,10 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { View, Text, ScrollView, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 import { images } from "@/constants";
 import { CustomButtons, FormField } from "@/components";
+import { createUser } from "@/lib/appwrite";
 
 const signUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,19 +16,31 @@ const signUp = () => {
     password: "",
   });
 
-  const submit = () => {
-    if (form.email === "" || form.password === "") {
+  const submit = async () => {
+    if (!form.email || !form.password || !form.username) {
       Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
     setIsSubmitting(true);
+
+    try {
+      const user = await createUser(form.email, form.password, form.username);
+      router.push("/home");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <SafeAreaView className="h-full bg-black">
-      <ScrollView>
-        <View className="w-full min-h-[85vh] px-4 py-6">
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
+        <View className="w-full px-4">
           <Image
             source={images.logo}
             resizeMode="contain"
@@ -50,20 +63,13 @@ const signUp = () => {
             keyboardType="email-address"
           />
           <FormField
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
-            keyboardType="email-address"
-          />
-          <FormField
             title="Password"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
           />
           <CustomButtons
-            title="Sign In"
+            title="Sign Up"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
