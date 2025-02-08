@@ -7,8 +7,10 @@ import { Link, router } from "expo-router";
 import { images } from "@/constants";
 import { CustomButtons, FormField } from "@/components";
 import { signIn, signOut } from "@/lib/appwrite";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const signInPage = () => {
+  const { setIsLogged, setUser } = useGlobalContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -24,7 +26,9 @@ const signInPage = () => {
     setIsSubmitting(true);
 
     try {
-      await signIn(form.email, form.password);
+      const userSession = await signIn(form.email, form.password);
+      setUser(userSession);
+      setIsLogged(true);
       router.push("/home");
     } catch (error) {
       Alert.alert("Error", error.message);

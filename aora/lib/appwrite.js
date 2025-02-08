@@ -30,6 +30,7 @@ const storage = new Storage(client);
 const avatars = new Avatars(client);
 const databases = new Databases(client);
 
+// Create User
 export async function createUser(email, password, username) {
   try {
     const newAccount = await account.create(
@@ -63,6 +64,7 @@ export async function createUser(email, password, username) {
   }
 }
 
+// Sign In
 export async function signIn(email, password) {
   try {
     return await account.createEmailPasswordSession(email, password);
@@ -71,10 +73,44 @@ export async function signIn(email, password) {
   }
 }
 
+// Sign Out
 export async function signOut() {
   try {
     return await account.deleteSession("current");
   } catch (error) {
     throw new Error(error);
+  }
+}
+
+// Get Account
+export async function getAccount() {
+  try {
+    const currentAccount = await account.get();
+
+    return currentAccount;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+// Get Current User
+export async function getCurrentUser() {
+  try {
+    const currentAccount = await getAccount();
+
+    if (!currentAccount) throw Error;
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
+
+    if (!currentUser) throw Error;
+
+    return currentUser.documents[0];
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
