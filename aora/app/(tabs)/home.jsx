@@ -10,7 +10,6 @@ import { images } from "@/constants";
 
 const home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
-  console.log(posts.avatar);
 
   return (
     <SafeAreaView className="bg-primary">
@@ -22,8 +21,8 @@ const home = () => {
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
-            creator={item.username}
-            avatar={item.avatar}
+            creator={item.creator.username}
+            avatar={item.creator.avatar}
           />
         )}
         ListHeaderComponent={() => (

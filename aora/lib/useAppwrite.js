@@ -9,6 +9,7 @@ const useAppwrite = (fn) => {
     setLoading(true);
     try {
       const res = await fn();
+      console.log(`res: ${JSON.stringify(res)}`);
       setData(res);
     } catch (error) {
       Alert.alert("Error", error.message);
