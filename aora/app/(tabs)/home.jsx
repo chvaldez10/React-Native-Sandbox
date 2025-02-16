@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList, Image, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { VideoCard, SearchInput, EmptyState, Trending } from "@/components";
 import useAppwrite from "@/lib/useAppwrite";
@@ -9,6 +9,14 @@ import { images } from "@/constants";
 const home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   return (
     <SafeAreaView className="bg-primary">
@@ -61,6 +69,9 @@ const home = () => {
             subtitle="No videos created yet"
           />
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </SafeAreaView>
   );
