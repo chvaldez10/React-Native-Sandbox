@@ -10,8 +10,6 @@ const AuthLayout = () => {
     return <Redirect href="/home" />;
   }
 
-  console.log(`isLogged: ${isLogged}`);
-
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="sign-in" />

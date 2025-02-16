@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import VideoCard from "@/components/VideoCard";
-import SearchInput from "@/components/SearchInput";
-import EmptyState from "@/components/EmptyState";
+import { VideoCard, SearchInput, EmptyState, Trending } from "@/components";
 import useAppwrite from "@/lib/useAppwrite";
-import { getAllPosts } from "@/lib/appwrite";
+import { getAllPosts, getLatestPosts } from "@/lib/appwrite";
 import { images } from "@/constants";
 
 const home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: latestPosts } = useAppwrite(getLatestPosts);
 
   return (
     <SafeAreaView className="bg-primary">
@@ -52,6 +51,7 @@ const home = () => {
               <Text className="text-lg font-pregular text-gray-100 mb-3">
                 Latest Videos
               </Text>
+              <Trending posts={latestPosts ? latestPosts : []} />
             </View>
           </View>
         )}
