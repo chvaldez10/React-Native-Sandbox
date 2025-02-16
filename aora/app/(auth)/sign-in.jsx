@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
 
 import { images } from "@/constants";
-import { CustomButtons, FormField } from "@/components";
+import { CustomButton, FormField } from "@/components";
 import { signIn, signOut } from "@/lib/appwrite";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
@@ -65,13 +65,13 @@ const signInPage = () => {
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
           />
-          <CustomButtons
+          <CustomButton
             title="Sign In"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
-          {/* <CustomButtons
+          {/* <CustomButton
             title="Sign Out"
             handlePress={signOut}
             containerStyles="mt-7"

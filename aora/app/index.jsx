@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { Redirect, router } from "expo-router";
 import { View, Text, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CustomButtons, Loader } from "@/components";
+import { CustomButton, Loader } from "@/components";
 
 import { images } from "../constants";
 import { useGlobalContext } from "@/context/GlobalProvider";
@@ -54,7 +54,7 @@ const Welcome = () => {
             Exploration with Aora
           </Text>
 
-          <CustomButtons
+          <CustomButton
             title="Continue with Email"
             handlePress={() => router.push("/sign-in")}
             containerStyles="w-full mt-7"
