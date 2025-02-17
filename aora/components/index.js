@@ -5,6 +5,7 @@ import Trending from "./Trending";
 import VideoCard from "./VideoCard";
 import SearchInput from "./SearchInput";
 import EmptyState from "./EmptyState";
+import InfoBox from "./InfoBox";
 
 export {
   Loader,
@@ -14,4 +15,5 @@ export {
   VideoCard,
   SearchInput,
   EmptyState,
+  InfoBox,
 };
